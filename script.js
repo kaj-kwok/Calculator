@@ -13,24 +13,69 @@ const zero = document.querySelector('#key0');
 //const operatorsBtn = document.getElementsByClassName('.operations');
 let displayValue = '0';
 display.innerHTML = 0 // set initial value of 0
-let savedValue = '';
+let savedValue = ''; //store 1st value
+let currentTotal = '';
+var Operator = {}; // store selected operator
 
 //update the display text to the current displayValue
 function displayUpdate(){
     display.innerHTML = displayValue
 }
-//click on operator
 
+//click on operator
 let operatorBtn = document.querySelectorAll('.operator')
         operatorBtn.forEach((button) => {
-            button.addEventListener('click', function() {
-                savedValue = displayValue;
-                displayValue = 0;
-                displayUpdate();
+            button.addEventListener('click', function(e) {
+                if (savedValue == ''){  /// condition to check if savedValue exists, if not, first loop, save value
+                        savedValue = displayValue;
+                }
+                else{
+                    operate(Operator, savedValue, displayValue); // condition if, savedValue exist, run function to evaluate display the total
+                    savedValue = currentTotal;
+                }
+                Operator = e.target.id; //capture operator
+                displayValue = 0; // reset value
             })
-            
-               
+        })
+
+
+// equal button function
+ equalsBtn = document.querySelector('#equals');
+ equalsBtn.addEventListener('click', function(){
+     if(savedValue == ''){
+         display.innerHTML = 'oops'
+     }
+    operate(Operator, savedValue, displayValue);
+    })
+
+//CE button to clear
+ceBtn = document.querySelector('#clearSpace');
+ceBtn.addEventListener('click', () => {
+    savedValue = '';
+    currentTotal = '';
+    displayValue = '0'
+    display.innerHTML = 0
 })
+
+//C button to backspace
+cBtn = document.querySelector('#backSpace');
+cBtn.addEventListener('click', () => {
+    modifiedNum = display.innerHTML
+    console.log(modifiedNum)
+    if(modifiedNum.length === 1 || modifiedNum == ''){
+        display.innerHTML = 0
+    }
+    if(modifiedNum === 0){
+        display.innerHTML = 0
+    }
+    if (modifiedNum.length > 1){
+        modifiedNum = modifiedNum.slice(0, -1);
+        displayValue = modifiedNum
+        displayUpdate();
+    }
+    
+})
+
 // created functions to update display for all number buttons, prob could do forEach?
 //clicking on no.9
 nine.addEventListener('click', function() {
@@ -134,38 +179,27 @@ zero.addEventListener('click', function() {
 })
 
 
-//operation to add
-function add(x, y){
-    return x + y;
-}
-
-//operation to subtract
-function subtract(x, y) {
-    return x - y;
-}
-
-//operation to multiple
-function multiply(x, y) {
-    return x * y;
-}
-
-//operation to divide 
-function divide(x, y) {
-    return x / y;
-}
-
 //run operation
-function operate(operator, x, y){
-    if(operator == add){
-        return add(x, y)
+function operate(Operator, savedValue, displayValue){
+    if(Operator == 'add'){
+        currentTotal = savedValue + displayValue;
+        display.innerHTML = currentTotal;
     }
-    if(operator == subtract){
-        return subtract(x, y)
+    if(Operator == 'subtract'){
+        currentTotal = savedValue - displayValue;
+        display.innerHTML = currentTotal;
     }
-    if(operator == multiply){
-        return multiply(x, y) 
+    if(Operator == 'multiply'){
+        currentTotal = savedValue * displayValue;
+        display.innerHTML = currentTotal;
     }
-    if(operator == divide){
-        return divide(x, y)
+    if(Operator == 'divide'){
+        if(displayValue == 0) {
+            display.innerHTML = 'To the Moon'
+        }
+        else{
+        currentTotal = savedValue / displayValue;
+        display.innerHTML = currentTotal;
+        }
     }
 }

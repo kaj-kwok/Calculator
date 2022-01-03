@@ -10,6 +10,7 @@ const three = document.querySelector('#key3');
 const two = document.querySelector('#key2');
 const one = document.querySelector('#key1');
 const zero = document.querySelector('#key0');
+const decBtn = document.querySelector('#decimal');
 //const operatorsBtn = document.getElementsByClassName('.operations');
 let displayValue = '0';
 display.innerHTML = 0 // set initial value of 0
@@ -43,7 +44,7 @@ let operatorBtn = document.querySelectorAll('.operator')
  equalsBtn = document.querySelector('#equals');
  equalsBtn.addEventListener('click', function(){
      if(savedValue == ''){
-         display.innerHTML = 'oops'
+         display.innerHTML = displayValue
      }
     operate(Operator, savedValue, displayValue);
     })
@@ -79,9 +80,10 @@ cBtn.addEventListener('click', () => {
 // created functions to update display for all number buttons, prob could do forEach?
 //clicking on no.9
 nine.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue == '0'){
         displayValue = 9;
     }
+
     else{
     displayValue += '9';
     }
@@ -89,7 +91,7 @@ nine.addEventListener('click', function() {
 })
 //click on no.8
 eight.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue == '0'){
         displayValue = 8;
     }
     else{    
@@ -99,7 +101,7 @@ eight.addEventListener('click', function() {
 })
 //click on no.7
 seven.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue == '0'){
         displayValue = 7;
     }
     else{
@@ -109,7 +111,7 @@ seven.addEventListener('click', function() {
 })
 //click on no.6
 six.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue == '0'){
         displayValue = 6;
     }
     else{
@@ -119,7 +121,7 @@ six.addEventListener('click', function() {
 })
 //click on no.5
 five.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue == '0'){
         displayValue = 5;
     }
     else{
@@ -129,7 +131,7 @@ five.addEventListener('click', function() {
 })
 //click on no.4
 four.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue == '0'){
         displayValue = 4;
     }
     else{
@@ -139,7 +141,7 @@ four.addEventListener('click', function() {
 })
 //click on no.3
 three.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue == '0'){
         displayValue = 3;
     }
     else{
@@ -149,7 +151,7 @@ three.addEventListener('click', function() {
 })
 //click on no.2
 two.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue == '0'){
         displayValue = 2;
     }
     else{
@@ -159,7 +161,7 @@ two.addEventListener('click', function() {
 })
 //click on no.1
 one.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue == '0'){
         displayValue = 1;
     }
     else{
@@ -169,13 +171,22 @@ one.addEventListener('click', function() {
 })
 //click on no.0
 zero.addEventListener('click', function() {
-    if(displayValue == 0){
+    if(displayValue === 0){
         displayValue = 0;
+    }
+    if(displayValue == '.'){
+        displayValue += '0'
     }
     else{
         displayValue += '0';
     }
         return displayUpdate();
+})
+
+//floating number button
+decBtn.addEventListener('click', () => {
+    displayValue += '.';
+    return displayUpdate();
 })
 
 

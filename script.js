@@ -70,43 +70,36 @@ window.addEventListener('keydown', function(e){
 let operatorBtn = document.querySelectorAll('.operator')
         operatorBtn.forEach((button) => {
             button.addEventListener('click', function(e) {
-                runOperation(e)
-            })
-                })
-           function runOperation(e) {
-                if (savedValue == ''){  /// condition to check if savedValue exists, if not, first loop, save value
+                if (savedValue === ''){  /// condition to check if savedValue exists, if not, first loop, save value
                         savedValue = parseFloat(display.innerHTML);
                         // historyUpdate()
                 }
                 else{              
                     operate(Operator, savedValue, displayValue); // condition if, savedValue exist, run function to evaluate display the total
                     savedValue = currentTotal;
+                
                     
                 }
                 Operator = e.target.id; //capture operator   
                 historyUpdate()
-                displayValue = 0; // reset value
+                displayValue = ''; // reset value
 
-            }
+            })
+        })
 
 
 
 // equal button function
  equalsBtn = document.querySelector('#equals');
  equalsBtn.addEventListener('click', function(){
-    updateEq()
- })
-
-function updateEq() {
     historyUpdateEq();
-     if(savedValue == ''){
-         display.innerHTML = displayValue
-     }
-     else{
+    //  if(savedValue == ''){
+    //      display.innerHTML = displayValue
+    //  }
+    //  else{
     operate(Operator, savedValue, displayValue);
-     }
-    
-}
+    //  }
+})
 
 //CE button to clear
 ceBtn = document.querySelector('#clearSpace');
@@ -316,11 +309,11 @@ zero.addEventListener('click', function() {
 })
 
 function updateKey0() {
-    if(displayValue === 0){
+    if(displayValue === '0'){
         displayValue = 0;
     }
     if(displayValue == '.'){
-        displayValue += '0'
+        displayValue += 0
     }
     else{
         displayValue += '0';
@@ -367,4 +360,5 @@ function operate(Operator, savedValue, displayValue){
     
         }
     }display.innerHTML = currentTotal;
+
 }

@@ -1,4 +1,4 @@
-const display = document.querySelector('#display');
+const display = document.querySelector('#currentEq');
 const numberBtn = document.getElementsByClassName('.number');
 const nine = document.querySelector('#key9');
 const eight = document.querySelector('#key8');
@@ -11,6 +11,9 @@ const two = document.querySelector('#key2');
 const one = document.querySelector('#key1');
 const zero = document.querySelector('#key0');
 const decBtn = document.querySelector('#decimal');
+const currentEq = document.querySelector('#currentEq');
+const pastEq = document.querySelector('#pastEq');
+
 //const operatorsBtn = document.getElementsByClassName('.operations');
 let displayValue = '0';
 display.innerHTML = 0 // set initial value of 0
@@ -23,19 +26,46 @@ function displayUpdate(){
     display.innerHTML = displayValue
 }
 
+//update the history display
+function historyUpdateEq(){
+    pastEq.innerHTML = `${savedValue} ${convertOp(Operator)} ${displayValue} =`;
+}
+
+//update the history display
+function historyUpdate(){
+    pastEq.innerHTML = `${savedValue} ${convertOp(Operator)}`;
+}
+
+//function to convert operator to sign
+function convertOp(Operator) {
+    if (Operator == 'multiply')
+    return 'x';
+    if (Operator == 'divide')
+    return '/';
+    if (Operator == 'add')
+    return '+';
+    if (Operator == 'subtract')
+    return '-';
+    
+}
+
 //click on operator
 let operatorBtn = document.querySelectorAll('.operator')
         operatorBtn.forEach((button) => {
             button.addEventListener('click', function(e) {
                 if (savedValue == ''){  /// condition to check if savedValue exists, if not, first loop, save value
-                        savedValue = displayValue;
+                        savedValue = parseFloat(display.innerHTML);
+                        // historyUpdate()
                 }
-                else{
+                else{              
                     operate(Operator, savedValue, displayValue); // condition if, savedValue exist, run function to evaluate display the total
                     savedValue = currentTotal;
+                    
                 }
-                Operator = e.target.id; //capture operator
+                Operator = e.target.id; //capture operator   
+                historyUpdate()
                 displayValue = 0; // reset value
+
             })
         })
 
@@ -43,11 +73,15 @@ let operatorBtn = document.querySelectorAll('.operator')
 // equal button function
  equalsBtn = document.querySelector('#equals');
  equalsBtn.addEventListener('click', function(){
+    historyUpdateEq();
      if(savedValue == ''){
          display.innerHTML = displayValue
      }
+     else{
     operate(Operator, savedValue, displayValue);
-    })
+     }
+    
+})
 
 //CE button to clear
 ceBtn = document.querySelector('#clearSpace');
@@ -55,14 +89,15 @@ ceBtn.addEventListener('click', () => {
     savedValue = '';
     currentTotal = '';
     displayValue = '0'
-    display.innerHTML = 0
+    display.innerHTML = 0;
+    pastEq.innerHTML = '';
+
 })
 
 //C button to backspace
 cBtn = document.querySelector('#backSpace');
 cBtn.addEventListener('click', () => {
     modifiedNum = display.innerHTML
-    console.log(modifiedNum)
     if(modifiedNum.length === 1 || modifiedNum == ''){
         display.innerHTML = 0
     }
@@ -185,8 +220,14 @@ zero.addEventListener('click', function() {
 
 //floating number button
 decBtn.addEventListener('click', () => {
+    if(displayValue % 1 != 0) {
+
+        return
+    }
+    else {
     displayValue += '.';
     return displayUpdate();
+    }
 })
 
 
@@ -194,23 +235,22 @@ decBtn.addEventListener('click', () => {
 function operate(Operator, savedValue, displayValue){
     if(Operator == 'add'){
         currentTotal = savedValue + displayValue;
-        display.innerHTML = currentTotal;
     }
     if(Operator == 'subtract'){
         currentTotal = savedValue - displayValue;
-        display.innerHTML = currentTotal;
+       
     }
     if(Operator == 'multiply'){
         currentTotal = savedValue * displayValue;
-        display.innerHTML = currentTotal;
+        
     }
     if(Operator == 'divide'){
         if(displayValue == 0) {
             display.innerHTML = 'To the Moon'
         }
         else{
-        currentTotal = savedValue / displayValue;
-        display.innerHTML = currentTotal;
+            currentTotal = savedValue / displayValue;
+    
         }
-    }
+    }display.innerHTML = currentTotal;
 }

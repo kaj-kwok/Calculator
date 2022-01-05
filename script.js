@@ -50,9 +50,30 @@ function convertOp(Operator) {
 }
 
 //click on operator
+
+window.addEventListener('keydown', function(e){
+    if(e.key == '*'){
+        document.getElementById("multiply").click()
+    }
+    if(e.key == '/'){
+        document.getElementById("divide").click()
+    }
+    if(e.key == '-'){
+        document.getElementById("subtract").click()
+    }
+    if(e.key == '+'){
+        document.getElementById("add").click()
+    }
+})
+
+
 let operatorBtn = document.querySelectorAll('.operator')
         operatorBtn.forEach((button) => {
             button.addEventListener('click', function(e) {
+                runOperation(e)
+            })
+                })
+           function runOperation(e) {
                 if (savedValue == ''){  /// condition to check if savedValue exists, if not, first loop, save value
                         savedValue = parseFloat(display.innerHTML);
                         // historyUpdate()
@@ -66,13 +87,17 @@ let operatorBtn = document.querySelectorAll('.operator')
                 historyUpdate()
                 displayValue = 0; // reset value
 
-            })
-        })
+            }
+
 
 
 // equal button function
  equalsBtn = document.querySelector('#equals');
  equalsBtn.addEventListener('click', function(){
+    updateEq()
+ })
+
+function updateEq() {
     historyUpdateEq();
      if(savedValue == ''){
          display.innerHTML = displayValue
@@ -81,7 +106,7 @@ let operatorBtn = document.querySelectorAll('.operator')
     operate(Operator, savedValue, displayValue);
      }
     
-})
+}
 
 //CE button to clear
 ceBtn = document.querySelector('#clearSpace');
@@ -112,9 +137,54 @@ cBtn.addEventListener('click', () => {
     
 })
 
+
+window.addEventListener('keydown', function(e){
+    if(e.key == '9') {
+        updateKey9()
+    }
+    if(e.key == '8') {
+        updateKey8()
+    }
+    if(e.key == '7'){
+        updateKey7()
+    }
+    if(e.key == '6'){
+        updateKey6()
+    }
+    if(e.key == '5') {
+        updateKey5()
+    }
+    if(e.key == '4'){
+        updateKey4()
+    }
+    if(e.key == '3'){
+        updateKey3()
+    }
+    if(e.key == '2') {
+        updateKey2()
+    }
+    if(e.key == '1'){
+        updateKey1()
+    }
+    if(e.key == '0'){
+        updateKey0()
+    }
+    if(e.key == '.'){
+        updateKeyDec()
+    }
+    if(e.key == '='|| e.key =='Enter'){
+        document.getElementById("equals").click()
+    }
+})
+
+
 // created functions to update display for all number buttons, prob could do forEach?
 //clicking on no.9
-nine.addEventListener('click', function() {
+nine.addEventListener('click', function(){
+    updateKey9()
+})
+
+function updateKey9() {
     if(displayValue == '0'){
         displayValue = 9;
     }
@@ -123,9 +193,13 @@ nine.addEventListener('click', function() {
     displayValue += '9';
     }
     return displayUpdate(); // return to update the display text
-})
+}
 //click on no.8
 eight.addEventListener('click', function() {
+    updateKey8()
+})
+
+function updateKey8(){
     if(displayValue == '0'){
         displayValue = 8;
     }
@@ -133,9 +207,13 @@ eight.addEventListener('click', function() {
     displayValue += '8';
     }
     return displayUpdate();
-})
+}
 //click on no.7
 seven.addEventListener('click', function() {
+    updateKey7()
+})
+    
+function updateKey7() {
     if(displayValue == '0'){
         displayValue = 7;
     }
@@ -143,9 +221,13 @@ seven.addEventListener('click', function() {
     displayValue += '7';
     }
     return displayUpdate();
-})
+    }
 //click on no.6
 six.addEventListener('click', function() {
+    updateKey6()
+})
+ 
+function updateKey6() {
     if(displayValue == '0'){
         displayValue = 6;
     }
@@ -153,9 +235,13 @@ six.addEventListener('click', function() {
         displayValue += '6';
     }
     return displayUpdate();
-})
+}
 //click on no.5
 five.addEventListener('click', function() {
+    updateKey5()
+})
+
+function updateKey5() {
     if(displayValue == '0'){
         displayValue = 5;
     }
@@ -163,9 +249,13 @@ five.addEventListener('click', function() {
         displayValue += '5';
     }
     return displayUpdate();
-})
+}
 //click on no.4
 four.addEventListener('click', function() {
+    updateKey4()
+})
+
+function updateKey4() {
     if(displayValue == '0'){
         displayValue = 4;
     }
@@ -173,9 +263,14 @@ four.addEventListener('click', function() {
         displayValue += '4';
     }
     return displayUpdate();
-})
+}
+
 //click on no.3
 three.addEventListener('click', function() {
+    updateKey3()
+})
+
+function updateKey3() {
     if(displayValue == '0'){
         displayValue = 3;
     }
@@ -183,9 +278,14 @@ three.addEventListener('click', function() {
         displayValue += '3';
     }
     return displayUpdate();
-})
+}
+
 //click on no.2
 two.addEventListener('click', function() {
+    updateKey2()
+})
+
+function updateKey2() {
     if(displayValue == '0'){
         displayValue = 2;
     }
@@ -193,9 +293,14 @@ two.addEventListener('click', function() {
         displayValue += '2';
     }
     return displayUpdate();
-})
+}
+
 //click on no.1
 one.addEventListener('click', function() {
+    updateKey1()
+})
+
+function updateKey1() {
     if(displayValue == '0'){
         displayValue = 1;
     }
@@ -203,9 +308,14 @@ one.addEventListener('click', function() {
         displayValue += '1';
     }
     return displayUpdate();
-})
+}
+
 //click on no.0
 zero.addEventListener('click', function() {
+    updateKey0()
+})
+
+function updateKey0() {
     if(displayValue === 0){
         displayValue = 0;
     }
@@ -216,10 +326,14 @@ zero.addEventListener('click', function() {
         displayValue += '0';
     }
         return displayUpdate();
-})
+}
 
 //floating number button
 decBtn.addEventListener('click', () => {
+    updateKeyDec()
+})
+
+function updateKeyDec() {    
     if(displayValue % 1 != 0) {
 
         return
@@ -228,11 +342,11 @@ decBtn.addEventListener('click', () => {
     displayValue += '.';
     return displayUpdate();
     }
-})
-
+}
 
 //run operation
 function operate(Operator, savedValue, displayValue){
+    displayValue = parseFloat(display.innerHTML)
     if(Operator == 'add'){
         currentTotal = savedValue + displayValue;
     }
